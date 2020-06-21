@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import Star from "./Star";
 
 const PercentageBar = ({ starText, percentage }) => {
@@ -26,31 +26,14 @@ const PercentageBar = ({ starText, percentage }) => {
           marginHorizontal: 10,
         }}
       >
-        <View
-          style={{
-            backgroundColor: "#F5F8FF",
-            borderRadius: 18,
-            position: "absolute",
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
-            padding: 2,
-          }}
-        >
+        <View style={styles.progressWrap}>
           <View
-            style={{
-              flex: 1,
-              shadowOffset: { width: 0, height: 0 },
-              shadowColor: "#ffcc48",
-              shadowOpacity: 1.0,
-              shadowRadius: 4,
-              backgroundColor: "#FFCC48",
-              borderRadius: 18,
-              width: `${percentage}%`,
-              minWidth: 5,
-              elevation: 4,
-            }}
+            style={[
+              styles.progressBar,
+              {
+                width: `${percentage}%`,
+              },
+            ]}
           />
         </View>
       </View>
@@ -107,7 +90,11 @@ export default function App() {
             <PercentageBar starText="1 star" percentage={1} />
           </View>
         </View>
-        <Text style={styles.howWeCalculate}>How do we calculate ratings?</Text>
+        <TouchableOpacity>
+          <Text style={styles.howWeCalculate}>
+            How do we calculate ratings?
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -155,5 +142,26 @@ const styles = StyleSheet.create({
   },
   spacer: {
     marginBottom: 14,
+  },
+  progressWrap: {
+    backgroundColor: "#F5F8FF",
+    borderRadius: 18,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    padding: 2,
+  },
+  progressBar: {
+    flex: 1,
+    shadowOffset: { width: 0, height: 0 },
+    shadowColor: "#ffcc48",
+    shadowOpacity: 1.0,
+    shadowRadius: 4,
+    backgroundColor: "#FFCC48",
+    borderRadius: 18,
+    minWidth: 5,
+    elevation: 4,
   },
 });
