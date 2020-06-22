@@ -172,6 +172,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFCC48",
     borderRadius: 18,
     minWidth: 5,
-    elevation: 4,
   },
 });
