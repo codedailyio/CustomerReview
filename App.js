@@ -48,7 +48,6 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.reviewContainer}>
-        <View></View>
         <Text style={styles.title}>Customer reviews</Text>
         <View style={styles.totalWrap}>
           <View
