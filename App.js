@@ -1,52 +1,45 @@
-import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Animated,
+} from "react-native";
 import Star from "./Star";
 
 const PercentageBar = ({ starText, percentage }) => {
+  const [animation] = useState(new Animated.Value(0));
+  useEffect(() => {
+    Animated.timing(animation, {
+      toValue: percentage,
+      duration: 500,
+    }).start();
+  }, [percentage]);
+
   return (
     <View
       style={{
         flexDirection: "row",
-        justifyContent: "space-between",
       }}
     >
-      <Text
-        style={{
-          width: 50,
-          fontSize: 14,
-          color: "#2A5BDA",
-        }}
-      >
-        {starText}
-      </Text>
-      <View
-        style={{
-          height: 15,
-          flex: 1,
-          marginHorizontal: 10,
-        }}
-      >
+      <Text style={styles.progressText}>{starText}</Text>
+      <View style={styles.progressMiddle}>
         <View style={styles.progressWrap}>
-          <View
+          <Animated.View
             style={[
               styles.progressBar,
               {
-                width: `${percentage}%`,
+                width: animation.interpolate({
+                  inputRange: [0, 100],
+                  outputRange: ["0%", "100%"],
+                }),
               },
             ]}
           />
         </View>
       </View>
-
-      <Text
-        style={{
-          width: 40,
-          fontSize: 14,
-          color: "#323357",
-        }}
-      >
-        {percentage}%
-      </Text>
+      <Text style={styles.progressPercentText}>{percentage}%</Text>
     </View>
   );
 };
@@ -111,8 +104,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     borderRadius: 10,
     paddingHorizontal: 30,
-    paddingVertical: 20,
+    paddingVertical: 40,
     minWidth: "80%",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 1.0,
+    shadowRadius: 4,
+    shadowColor: "rgba(193, 211, 251, 0.5)",
+    elevation: 5,
   },
   title: {
     fontWeight: "bold",
@@ -128,7 +126,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
-    padding: 10,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
   },
   amountText: {
     fontSize: 16,
@@ -142,6 +141,17 @@ const styles = StyleSheet.create({
   },
   spacer: {
     marginBottom: 14,
+  },
+  progressText: {
+    width: 50,
+    fontSize: 14,
+    color: "#2A5BDA",
+  },
+  progressPercentText: { width: 40, fontSize: 14, color: "#323357" },
+  progressMiddle: {
+    height: 15,
+    flex: 1,
+    marginHorizontal: 10,
   },
   progressWrap: {
     backgroundColor: "#F5F8FF",
